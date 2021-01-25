@@ -1,7 +1,8 @@
 require 'json';
 require 'rest-client'
 
-POE_DATA = {"Lair of the Hydra Map" => 1, "Fragment of the Hydra" => 2}
+POE_ITEMS = ["Lair of the Hydra Map", "Fragment of the Hydra"]
+PoE_Prices = {}
 POE_TRADE_URL = "https://www.pathofexile.com/api/trade/search/Ritual"
 
 
@@ -16,15 +17,22 @@ def search_item(item, is_map)
 end
 
 def check_prices(ids)
-  url = "https://www.pathofexile.com/api/trade/fetch/" + ids['result'][0...10].join(',')
-  data = RestClient.get url, {params: {query: ids['id']}}
-  puts data
-  return false
+  url = "https://www.pathofexile.com/api/trade/fetch/" + ids['result'].take(10).join(',')
+  puts url
+  raw_data = RestClient.get url, {params: {query: ids['id']}}
+  data = JSON.parse(raw_data)
+  #puts data['result']
+  prices = []
+  data['result'].each do |x|
+    prices << x['listing']['price']['amount']
+  end
+  return prices
 end
 
-POE_DATA.each do |item, y|
+POE_ITEMS.each do |item|
   is_map = false
   is_map = true if item.include? "Map"
   ids = search_item(item, is_map)
-  check_prices(ids)
+  prices = check_prices(ids)
+  PoE_Prices[item] = prices.drop(2)  #Ignoring undercutters
 end
