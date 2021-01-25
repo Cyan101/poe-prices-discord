@@ -7,12 +7,17 @@ CONFIG = OpenStruct.new YAML.load_file 'settings.yaml'
 bot = Discordrb::Commands::CommandBot.new  token: CONFIG.token, prefix: CONFIG.prefix
 puts bot.invite_url
 
-bot.message(with_text: 'Ping!') do |event|
-  event.respond 'Pong!'
+bot.command(:eval, help_available: false) do |event, *code|
+  break unless event.user.id == CONFIG.owner
+  begin
+    eval code.join(' ')
+  rescue => e
+    "It didn't work :cry: sorry.... ```#{e}```"
+  end
 end
 
+
 bot.command(:start, help_available: false) do |event|
-  puts event.channel.send_message('<:cyanisamazing:540549775531966465>')
   break unless event.user.id == CONFIG.owner
   running = true
 
@@ -21,9 +26,9 @@ bot.command(:start, help_available: false) do |event|
   poe_embed = event.send_message(nil, nil, poe_embed_create(event))
 
   while running == true
-    sleep 500
+    sleep 10
     run_pc()
-    poe_embed.edit(nil, poe_embed_create())
+    poe_embed.edit(nil, poe_embed_create(event))
   end
 
 end
