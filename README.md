@@ -7,6 +7,7 @@ Searches Path of Exiles official trade website for certain items prices every 10
 2. Create a settings.yaml
 3. Connect the bot to your server with the link outputted in terminal on run
 4. Use the start command to start price checking and posting an embed (will take a while due to RL)
+5. (Optional) Upload the emoji folder to the server to allow for extra emoji on the embed
 
 settings.yaml
 
