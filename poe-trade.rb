@@ -19,16 +19,6 @@ def run_pc
   end
 end
 
-def search_item(item, is_map)
-  if is_map
-    body = {"query":{"status":{"option":"online"},"type":{"option": item,"discriminator":"warfortheatlas"},"stats":[{"type":"and","filters":[],"disabled":false}],"filters":{"trade_filters":{"disabled":true,"filters":{"price":{"min":3}}}}},"sort":{"price":"asc"}}.to_json
-  else
-    body = {"query":{"status":{"option":"online"},"type": item,"stats":[{"type":"and","filters":[],"disabled":true}],"filters":{"trade_filters":{"filters":{"price":{"min":3}}}}},"sort":{"price":"asc"}}.to_json
-  end
-  data = RestClient.post POE_TRADE_URL, body, {content_type: :json, accept: :json}
-  return JSON.parse(data)
-end
-
 def search_item(item, type)
   case type
   when :shaper_map
