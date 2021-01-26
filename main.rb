@@ -1,6 +1,6 @@
 require 'discordrb'
 require 'yaml'
-require_relative 'poe-trade.rb'
+require_relative 'poe-prices.rb'
 
 CONFIG = OpenStruct.new YAML.load_file 'settings.yaml'
 $poe_prices_running = false
@@ -33,7 +33,7 @@ end
 def poe_embed_create(event)
   embed = Discordrb::Webhooks::Embed.new
   embed.tap do |e|
-    e.author = { name: "Github - poe-trade-discord", url: 'http://github.com/cyan101/poe-trade-discord', icon_url: event.bot.profile.avatar_url }
+    e.author = { name: "Github - poe-prices-discord", url: 'https://github.com/cyan101/poe-prices-discord', icon_url: event.bot.profile.avatar_url }
     e.color = '3498db'
     e.thumbnail = { url: event.bot.profile.avatar_url }
     e.title = 'PoE Map/Fragment Pricing'
