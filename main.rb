@@ -22,6 +22,9 @@ bot.command(:start, help_available: false) do |event|
   break unless event.user.id == CONFIG.owner
   $poe_prices_running = true
 
+  run_pc()
+  poe_embed = event.send_message(nil, nil, poe_embed_create(event))
+
   while $poe_prices_running == true
     run_pc()
     poe_embed.edit(nil, poe_embed_create(event))
