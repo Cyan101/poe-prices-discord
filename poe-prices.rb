@@ -4,11 +4,12 @@ require 'rest-client'
 POE_ITEMS = {"Lair of the Hydra Map" => :shaper_map, "Fragment of the Hydra" => :fragment, "Pit of the Chimera Map" => :shaper_map, "Fragment of the Chimera" => :fragment, "Maze of the Minotaur Map" => :shaper_map, "Fragment of the Minotaur" => :fragment,
   "Forge of the Phoenix Map" => :shaper_map, "Fragment of the Phoenix" => :fragment, "Elder1" => :elder_map,  "Fragment of Enslavement" => :fragment, "Elder2" => :elder_map, "Fragment of Eradication" => :fragment, "Elder3" => :elder_map,
   "Fragment of Constriction" => :fragment, "Elder4" => :elder_map, "Fragment of Purification" => :fragment}
-ELDER_NAME_LOOKUP = ["The Enslaver", "The Eradicator", "The Contrictor", "The Purifier"]
-PoE_Prices = {}
+ELDER_NAME_LOOKUP = ["The Enslaver", "The Eradicator", "The Constrictor", "The Purifier"]
+PoE_Prices = {"Lair of the Hydra Map" => [1,1,1,1,1]} # Test Map
 POE_TRADE_URL = "https://www.pathofexile.com/api/trade/search/Ritual"
 
 def run_pc
+  puts 'Starting PC'
   POE_ITEMS.each do |item, type|
     ids = search_item(item, type)
     prices = check_prices(ids)
