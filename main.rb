@@ -22,14 +22,10 @@ bot.command(:start, help_available: false) do |event|
   break unless event.user.id == CONFIG.owner
   $poe_prices_running = true
 
-  run_pc()
-
-  poe_embed = event.send_message(nil, nil, poe_embed_create(event))
-
   while $poe_prices_running == true
-    sleep 200
     run_pc()
     poe_embed.edit(nil, poe_embed_create(event))
+    sleep 200
   end
 
 end
@@ -37,7 +33,7 @@ end
 def poe_embed_create(event)
   embed = Discordrb::Webhooks::Embed.new
   embed.tap do |e|
-    e.author = { name: "PoE Prices", url: 'http://github.com/cyan101/poe-trade-discord', icon_url: event.bot.profile.avatar_url }
+    e.author = { name: "Github - poe-trade-discord", url: 'http://github.com/cyan101/poe-trade-discord', icon_url: event.bot.profile.avatar_url }
     e.color = '3498db'
     e.thumbnail = { url: event.bot.profile.avatar_url }
     e.title = 'PoE Map/Fragment Pricing'
