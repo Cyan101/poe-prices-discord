@@ -40,7 +40,7 @@ def poe_embed_create(x)
     e.color = '3498db'
     e.thumbnail = { url: x.bot.profile.avatar_url }
     e.title = 'PoE Map/Fragment Pricing'
-    e.description = 'Information on guardian map and fragment pricing updated every 10min'
+    e.description = 'Shaper/Elder Guardian Maps & Fragments - Updated every 10min'
     e.timestamp = Time.now.utc
     #
     PoE_Prices.each_with_index do |(x, y), i|
