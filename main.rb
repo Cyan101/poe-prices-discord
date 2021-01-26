@@ -26,9 +26,9 @@ bot.command(:start, help_available: false) do |event|
   poe_embed = event.send_message(nil, nil, poe_embed_create(event))
 
   while $poe_prices_running == true
+    sleep 200
     run_pc()
     poe_embed.edit(nil, poe_embed_create(event))
-    sleep 200
   end
 
 end
@@ -48,6 +48,7 @@ def poe_embed_create(event)
       e.add_field name: x, value: y[0].to_s + 'c', inline: true
       e.add_field(name: "​​", value: "​", inline: true) if i.odd?
     end
+    return embed
   end
 end
 
