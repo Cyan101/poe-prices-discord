@@ -19,7 +19,7 @@ end
 
 bot.command(:stop, help_available: false) do |event|
   break unless event.user.id == CONFIG.owner
-  break if $poe_prices_running = true
+  break if $poe_prices_running == false
   $poe_prices_running = false
   'PoE Map/Frag Pricing has stopped'
 end
