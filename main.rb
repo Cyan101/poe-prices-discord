@@ -31,8 +31,13 @@ bot.command(:start, help_available: false) do |event|
 
   poe_embed = event.send_message(nil, nil, poe_embed_create(event))
 
-  while $poe_prices_running == true
-    run_pc()
+  while $poe_prices_running
+    begin
+      run_pc()
+    rescue => e
+      event.send_message 'Bot Stopped - Price Check Error: ' + e[0..150]
+      $poe_prices_running = false
+    end
     poe_embed.edit(nil, poe_embed_create(event))
     sleep 200
   end
