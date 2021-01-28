@@ -1,5 +1,7 @@
-## PoE-trade-discord
+## PoE-Prices-Discord
 Searches Path of Exiles official trade website for certain items prices every 10ish min
+
+![PoE-Prices-Discord](https://raw.githubusercontent.com/Cyan101/poe-prices-discord/main/example.png)
 
 ## How to Use
 
