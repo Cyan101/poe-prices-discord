@@ -7,6 +7,7 @@ POE_ITEMS = {"Lair of the Hydra Map" => :shaper_map, "Fragment of the Hydra" => 
 ELDER_NAME_LOOKUP = ["The Enslaver", "The Eradicator", "The Constrictor", "The Purifier"]
 PoE_Prices = {} # Test Map
 POE_TRADE_URL = "https://www.pathofexile.com/api/trade/search/Ritual"
+HEADERS = if CONFIG.sess_id then {content_type: :json, accept: :json, cookies: {POESESSID: CONFIG.sess_id}} else {content_type: :json, accept: :json} end
 
 def run_pc
   puts 'Starting PC'
@@ -29,7 +30,7 @@ def search_item(item, type)
   when :fragment
     body = {"query":{"status":{"option":"online"},"type": item,"stats":[{"type":"and","filters":[],"disabled":true}],"filters":{"trade_filters":{"filters":{"price":{"min":3}}}}},"sort":{"price":"asc"}}.to_json
   end
-  data = RestClient.post POE_TRADE_URL, body, {content_type: :json, accept: :json}
+  data = RestClient.post POE_TRADE_URL, body, HEADERS
   return JSON.parse(data)
 end
 

@@ -1,8 +1,8 @@
 require 'discordrb'
 require 'yaml'
+CONFIG = OpenStruct.new YAML.load_file 'settings.yaml'
 require_relative 'poe-prices.rb'
 
-CONFIG = OpenStruct.new YAML.load_file 'settings.yaml'
 $poe_prices_running = false
 
 bot = Discordrb::Commands::CommandBot.new  token: CONFIG.token, prefix: CONFIG.prefix
@@ -19,6 +19,7 @@ end
 
 bot.command(:stop, help_available: false) do |event|
   break unless event.user.id == CONFIG.owner
+  break if $poe_prices_running = true
   $poe_prices_running = false
   'PoE Map/Frag Pricing has stopped'
 end
