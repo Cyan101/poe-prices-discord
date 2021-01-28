@@ -5,7 +5,7 @@ POE_ITEMS = {"Lair of the Hydra Map" => :shaper_map, "Fragment of the Hydra" => 
   "Forge of the Phoenix Map" => :shaper_map, "Fragment of the Phoenix" => :fragment, "Elder1" => :elder_map,  "Fragment of Enslavement" => :fragment, "Elder2" => :elder_map, "Fragment of Eradication" => :fragment, "Elder3" => :elder_map,
   "Fragment of Constriction" => :fragment, "Elder4" => :elder_map, "Fragment of Purification" => :fragment}
 ELDER_NAME_LOOKUP = ["The Enslaver", "The Eradicator", "The Constrictor", "The Purifier"]
-PoE_Prices = {"Lair of the Hydra Map" => [1,1,1,1,1]} # Test Map
+PoE_Prices = {} # Test Map
 POE_TRADE_URL = "https://www.pathofexile.com/api/trade/search/Ritual"
 
 def run_pc
@@ -15,7 +15,7 @@ def run_pc
     prices = check_prices(ids)
     x = item[-1].to_i - 1 if type == :elder_map
     item = ELDER_NAME_LOOKUP[x] if type == :elder_map
-    PoE_Prices[item] = prices.drop(2) #Ignoring undercutters
+    PoE_Prices[item] = prices.drop(3) #Ignoring undercutters
     sleep 10 # Ratelimit avoidance, might need to increase
   end
 end

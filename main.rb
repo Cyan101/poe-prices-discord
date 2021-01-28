@@ -17,18 +17,23 @@ bot.command(:eval, help_available: false) do |event, *code|
   end
 end
 
+bot.command(:stop, help_available: false) do |event|
+  break unless event.user.id == CONFIG.owner
+  $poe_prices_running = false
+  'PoE Map/Frag Pricing has stopped'
+end
+
 
 bot.command(:start, help_available: false) do |event|
   break unless event.user.id == CONFIG.owner
   $poe_prices_running = true
 
-  run_pc()
   poe_embed = event.send_message(nil, nil, poe_embed_create(event))
 
   while $poe_prices_running == true
-    sleep 200
     run_pc()
     poe_embed.edit(nil, poe_embed_create(event))
+    sleep 200
   end
 
 end
