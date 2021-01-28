@@ -18,29 +18,35 @@ end
 bot.command(:stop, help_available: false) do |event|
   break unless event.user.id == CONFIG.owner
   break if $poe_embed == nil
-  $poe_embed = nil
-  'PoE Map/Frag Pricing has stopped'
+  old_thread, $poe_thread = $poe_thread, nil
+  old_thread.run unless old_thread.nil?
 end
 
 
 bot.command(:start, help_available: false) do |event|
   break unless event.user.id == CONFIG.owner
+  break if $poe_embed
 
   $poe_embed = event.send_message(nil, nil, poe_embed_create(event))
+  $poe_thread ||= Thread.new do
+    while $poe_thread == Thread.current
+      update_price_thread(event)
+      sleep 200
+    end
+  end
+end
 
-  while $poe_embed
+def update_price_thread(event)
     begin
       run_pc()
     rescue => err
       event.send_message "Bot Stopped: #{err}"
-      $poe_embed = nil; break
+      old_thread, $poe_thread = $poe_thread, nil
+      old_thread.run
     else
       $poe_embed.edit(nil, poe_embed_create(event))
-      sleep 200
     end
   end
-
-end
 
 def poe_embed_create(event)
   embed = Discordrb::Webhooks::Embed.new
