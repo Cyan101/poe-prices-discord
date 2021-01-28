@@ -45,7 +45,7 @@ end
 def poe_embed_create(event)
   embed = Discordrb::Webhooks::Embed.new
   embed.tap do |e|
-    e.author = { name: "Github - poe-prices-discord", url: 'https://github.com/cyan101/poe-prices-discord', icon_url: event.bot.profile.avatar_url }
+    e.author = { name: "Github - PoE-Prices-Discord", url: 'https://github.com/cyan101/poe-prices-discord', icon_url: event.bot.profile.avatar_url }
     e.color = '3498db'
     e.thumbnail = { url: event.bot.profile.avatar_url }
     e.title = 'PoE Map/Fragment Pricing'

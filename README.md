@@ -24,4 +24,8 @@ sess_id: '123456789abcdefgh'
 * Prefix is what you use to tell the bot you are using a command in discord (eg. !start or ~start)
 * Owner needs to be your discord id (can be grabbed in discord dev mode) to stop others controlling admin commands
 * Emoji is optional true/false, if true you need to upload the emoji in the emoji folder to your server
-* Sess_id is your POESESSID, you can see this from a network request on the main/trade site or maybe your cookies, it "SHOULD" use your blacklist to help ignore price fixers/not seelers
+* Sess_id is your POESESSID, you can see this from a network request on the main/trade site or maybe your cookies, it "SHOULD" use your blacklist to help ignore price fixers/not sellers
+
+## To-Do
+* Add user-agent (Not really required)
+* Have option of sleep instead of just cancelling the loop
