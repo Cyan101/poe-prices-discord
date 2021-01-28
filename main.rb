@@ -3,8 +3,6 @@ require 'yaml'
 CONFIG = OpenStruct.new YAML.load_file 'settings.yaml'
 require_relative 'poe-prices.rb'
 
-$poe_prices_running = false
-
 bot = Discordrb::Commands::CommandBot.new  token: CONFIG.token, prefix: CONFIG.prefix
 puts bot.invite_url
 
@@ -19,27 +17,27 @@ end
 
 bot.command(:stop, help_available: false) do |event|
   break unless event.user.id == CONFIG.owner
-  break if $poe_prices_running == false
-  $poe_prices_running = false
+  break if $poe_embed == nil
+  $poe_embed = nil
   'PoE Map/Frag Pricing has stopped'
 end
 
 
 bot.command(:start, help_available: false) do |event|
   break unless event.user.id == CONFIG.owner
-  $poe_prices_running = true
 
-  poe_embed = event.send_message(nil, nil, poe_embed_create(event))
+  $poe_embed = event.send_message(nil, nil, poe_embed_create(event))
 
-  while $poe_prices_running
+  while $poe_embed
     begin
       run_pc()
-    rescue => e
-      event.send_message 'Bot Stopped - Price Check Error: ' + e[0..150]
-      $poe_prices_running = false
+    rescue => err
+      event.send_message "Bot Stopped: #{err}"
+      $poe_embed = nil; break
+    else
+      $poe_embed.edit(nil, poe_embed_create(event))
+      sleep 200
     end
-    poe_embed.edit(nil, poe_embed_create(event))
-    sleep 200
   end
 
 end
